@@ -9,22 +9,33 @@
     <h1>Bem-vindo a página de jogos!</h1>
     <hr>
     <p>Game mais jogado no momento:</p>
-    <ul>
-        <li>Título: {{titulo}}</li>
-        <li>Ano: {{ano}}</li>
-        <li>Categoria: {{categoria}}</li>
-    </ul>
-    <p>O jogo {{titulo}} tem {{2025 - ano}} anos.</p>
+
+    <!-- <ul>
+        <li>Título: {# {titulo} #}</li>
+        <li>Ano: {# {ano} #}</li>
+        <li>Categoria: {# {categoria} #}</li>
+    </ul> -->
+
+    <!-- percorrendo o dicionário -->
+     {% for chave, valor in game.items() %}
+     <details>
+        <summary>{{chave}}</summary>
+        {{valor}}
+     </details>
+     {% endfor %}
+
+
+    <p>O jogo {{game['Título']}} tem {{2025 - game['Ano']}} anos.</p>
 
     <hr>
 
-    <p>O jogo {{titulo}} está sendo jogado por:</p>
+    <p>O jogo {{game['Título']}} está sendo jogado por:</p>
     <ol>
         {% for jogador in jogadores %}
         <li>{{jogador}}</li>
         {% endfor %}
 
-        {# "jogadores" é o nome do array, "jogador" é uma variável criada na hora #}
+        <!-- {# "jogadores" é o nome do array, "jogador" é uma variável criada na hora #} -->
     </ol>
     <hr>
 

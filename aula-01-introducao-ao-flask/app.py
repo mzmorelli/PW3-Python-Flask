@@ -15,19 +15,20 @@ def home():
 # rota de games
 @app.route('/games')
 def games():
-    titulo = 'CS-GO'
-    ano = 2012
-    categoria = 'FPS Online'
+    # dicionário em python (objeto)
+    game = {
+        'Título' : 'CS-GO',
+        'Ano' : 2012,
+        'Categoria' : 'FPS Online'
+    }
     jogadores = ['Miguel José', 'Miguel Isack', 'Leaf', 'Quemario', 'Trop', 'Aspax', 'maxxdiego']
     jogos = ['Fortnite', 'Minecraft', 'Stray', 'The Legend of Zelda: Breath of The Wild', 'Baldurs Gate 3', 'Taiko no Tatsujin']
     return render_template('games.html',
-                           titulo=titulo,
-                           ano=ano,
-                           categoria=categoria,
+                           game=game,
                            jogadores=jogadores,
                            jogos=jogos)
 
 # Iniciando o servidor no localhost, porta 5000, modo de depuração ativado
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='localhost', port=5000, debug=True)
 # para deixar o seu projeto disponivel na rede, trocar o 'localhost' por '0.0.0.0' e disponibilizar o ip da sua máquina para quem quiser acessar
