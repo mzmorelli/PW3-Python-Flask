@@ -1,5 +1,5 @@
 from flask import render_template, request, redirect, url_for
-from models.database import Game
+from models.database import Game, db
 from models.database import Console
 
 # Lista de jogadores
@@ -36,20 +36,44 @@ def init_app(app):
                                game=game,
                                jogadores=jogadores,
                                jogos=jogos)
-    
+
     # Rota de cadastro de jogos (em dicionário)
     @app.route('/cadgames', methods=['GET', 'POST'])
     def cadgames():
         if request.method == 'POST':
             if request.form.get('titulo') and request.form.get('ano') and request.form.get('categoria'):
-                gamelist.append({'Título' : request.form.get('titulo'), 'Ano' : request.form.get('ano'), 'Categoria' : request.form.get('categoria')})
+                gamelist.append({'Título': request.form.get('titulo'), 'Ano': request.form.get(
+                    'ano'), 'Categoria': request.form.get('categoria')})
             return redirect(url_for('cadgames'))
         return render_template('cadgames.html',
                                gamelist=gamelist)
 
     # rota de estoque (crud)
-    @app.route('/estoque')
-    def estoque():
+    @app.route('/estoque', methods=['GET', 'POST'])
+    @app.route('/estoque/<int:id>')
+    def estoque(id=None):
+        # verificar se foi enviado alguma ID
+        if id:
+            # buscando jogo pela id e deletando
+            game = Game.query.get(id)
+            db.session.delete(game)
+            db.session.commit()
+            return redirect(url_for('estoque'))
+            
+        # verificando se a requisição é POST
+        # = -> atribuição
+        # == -> comparação simples (valor)
+        # === -> compara valor e tipo da variável
+        if request.method == 'POST':
+            # cadastra novo jogo
+            newgame = Game(request.form['titulo'], request.form['ano'], request.form['categoria'],
+                           request.form['plataforma'], request.form['preco'], request.form['quantidade'])
+            # enviando para o banco
+            db.session.add(newgame)
+            # confirmando as alterações
+            db.session.commit()
+            return redirect(url_for('estoque'))
+
         # fazendo um select no banco (pegando todos os jogos da tabela) / SELECT * from games
         gamesestoque = Game.query.all()
         consoleestoque = Console.query.all()
