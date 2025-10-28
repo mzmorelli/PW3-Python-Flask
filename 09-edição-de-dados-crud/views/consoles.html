@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consoles</title>
+</head>
+<body>
+    {% extends 'base.html' %}
+    {% block content %}
+    <form action="{{url_for('consoles')}}" method="POST">
+        <label for="nome">Nome: </label>
+        <input type="text" name="nome">
+        <label for="fabricante">Fabricante: </label>
+        <input type="text" name="fabricante">
+        <label for="ano">Ano: </label>
+        <input type="text" name="ano">
+        <label for="preco">Preço: </label>
+        <input type="text" name="preco">
+
+        <input type="submit" value="Cadastrar">
+    </form>
+
+    <br>
+    <hr>
+
+    <div>
+        {% for console in consoleList %}
+        <p>Nome: <strong>{{console.nome}}</strong></p>
+        <p>Fabricante: <strong>{{console.fabricante}}</strong></p>
+        <p>Ano: <strong>{{console.ano}}</strong></p>
+        <p>Preço: <strong>{{console.preco}}</strong></p>
+        {% endfor %}
+    </div>
+
+    {% endblock content %}
+</body>
+</html>

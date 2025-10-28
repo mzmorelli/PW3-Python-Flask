@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Diego Max Games</title>
+</head>
+<body>
+    {% extends 'base.html' %}
+    {% block content %}
+    <div class="container">
+        <h2>Cadastro de Diego Max Games</h2>
+        <hr>
+        <form action="{{url_for('cadgames')}}" method="POST">
+            <label for="title">Título:</label>
+            <input type="text" id="title" name="titulo" required>
+            
+            <label for="ano">Ano:</label>
+            <input type="text" id="ano" name="ano" required>
+            
+            <label for="categoria">Categoria:</label>
+            <input type="text" id="categoria" name="categoria" required>
+            
+            <input type="submit" value="Cadastrar">
+        </form>
+    </div>
+    <br>
+    <hr>
+    <div class="container gameList">
+        <h4>Games cadastrados:</h4>
+        {% for game in gameList %}
+        <p><strong>Título:</strong> {{game.titulo}}<br>
+           <strong>Ano:</strong> {{game.ano}}<br>
+           <strong>Categoria:</strong> {{game.categoria}}</p>
+        {% endfor %}
+    </div>
+    {% endblock content %}
+</body>
+</html>

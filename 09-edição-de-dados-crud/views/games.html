@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diego Max Games</title>
+</head>
+<body>
+    {% extends 'base.html' %}
+    {% block content %}
+
+    <!-- Esse é um comentário em Jinja2. O Jinja tem como objetivo injetar código Python na web -->
+    
+    <p><strong>Game mais jogado no momento</strong></p>
+    <img src="{{url_for('static', filename='img/csgo.jfif')}}">
+    {% for v, k in game.items() %}
+        <details>
+            <summary>{{k}}</summary>
+            {{v}}
+        </details>
+    {% endfor %}
+     
+    <ul>
+        <li><strong>Título:</strong> {{ game['titulo'] }}</li>
+        <li><strong>Ano:</strong> {{ game['ano'] }}</li>
+        <li><strong>Categoria:</strong> {{ game['categoria'] }}</li>
+    </ul> 
+    <p>O jogo <strong>{{ game['titulo'] }}</strong> tem <strong>{{ 2025 - game['ano'] }}</strong> anos.</p>
+    <hr>
+    <p><strong>O jogo {{ game['titulo'] }} está sendo jogado por:</strong></p>
+    {% for jogador in jogadores %}
+    <ul>
+        <li>{{jogador}}</li>
+    </ul>
+    {% endfor %}
+
+
+    <h4>
+        <form action="{{url_for('games')}}" method="post">
+            <label>Jogador: </label>
+            <input type="text" name="jogador">
+            <input type="submit" value="entrar">
+        </form>
+    </h4>
+    
+
+    <hr>
+    <p><strong>Principais jogos friv do momento:</strong></p>
+    <ul>
+        {% for jogofriv in jogosFriv %}
+        <li>{{ jogofriv }}</li>
+        {% endfor %}
+    </ul>
+
+    {% endblock content %}
+</body>
+</html>
